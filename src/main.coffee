@@ -25,6 +25,10 @@ runScript = (app, cb) ->
       cp -r #{__dirname}/../views build
       cp -r views/* build/views
       mkdir -p build/s/css build/s/js
+
+      if [ -d static ]; then
+        cp -r static/* build/s
+      fi
     """, cb
 
 writeAppJs = ->

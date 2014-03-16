@@ -5,7 +5,8 @@ class App
     @clientFile = null
     @routes = []
     @lang = 'en'
-    # Use this value, but don't change it. It's here for orchestrating.
+    # Use these values, but don't change them. They're here for orchestrating.
     @root = '/'
+    @static = '/s/'
 
 module.exports = App
