@@ -1,0 +1,5 @@
+# Intercessor
+
+## License
+
+MIT
