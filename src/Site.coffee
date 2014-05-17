@@ -1,7 +1,7 @@
 express = require 'express'
 http = require 'http'
 
-class Site
+module.exports = class Site
   constructor: (@app) ->
     @express = null
     @server = null
@@ -45,5 +45,3 @@ class Site
   locals: (req, res, next) ->
     res.locals.app = @app
     next()
-
-module.exports = Site;

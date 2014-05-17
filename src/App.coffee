@@ -1,4 +1,4 @@
-class App
+module.exports = class App
   constructor: (@id) ->
     @dir = null
     @stylFile = null
@@ -8,5 +8,3 @@ class App
     # Use these values, but don't change them. They're here for orchestrating.
     @root = '/'
     @static = '/s/'
-
-module.exports = App
