@@ -7,6 +7,9 @@
   "bin": {
     "intercessor": "./bin/intercessor.js"
   },
+  "scripts": {
+    "preinstall": "rm -fr lib; coffee --compile --bare --output lib src"
+  },
   "dependencies": {
     "express": ">=3.4.5",
     "jade": ">=1.3.0",
