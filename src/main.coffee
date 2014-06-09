@@ -1,55 +1,64 @@
 require('coffee-script').register()
-path = require 'path'
-Build = require('web-build-tools').Build
 fs = require 'fs'
+path = require 'path'
+{Build} = require 'web-build-tools'
 
-main = ->
+module.exports = ->
   try
-    app = require path.resolve './app'
+    app = require path.resolve './manifest'
   catch e
-    console.error "Found no `app` in current dir (#{path.resolve '.'})."
+    console.error "No `manifest.coffee` in current dir (#{path.resolve '.'})."
     process.exit 1
   build app
 
 build = (app) ->
   runScript app, ->
-    writeAppJs()
-    writeCss app
-    writeClient app
+    writeAppViews app, ->
+      writeAppCss app, ->
+        writeClientJs app, ->
+          writeAppJs app, ->
 
 runScript = (app, cb) ->
+  app.useAppLogic = fs.existsSync 'app'
   Build.sh """
-      rm -fr build
-      mkdir build
+    rm -fr build
+    mkdir -p build/s/css build/s/js
+    if [ -d app ]; then
       coffee --compile --bare --output build/app app
-      cp -r #{__dirname}/../views build
-      cp -r views/* build/views
-      mkdir -p build/s/css build/s/js
-
-      if [ -d static ]; then
-        cp -r static/* build/s
-      fi
+    fi
+    if [ -d static ]; then
+      cp -r static/* build/s
+    fi
     """, cb
 
-writeAppJs = ->
-  fs.writeFileSync 'build/app.js', """
-    var app = require('./app/index');
-    var Site = require('intercessor').Site;
+writeAppViews = (app, cb) ->
+  Build.sh """
+    # Copy Intercessor's views.
+    cp -r #{__dirname}/../views build
+    cp -r views/* build/views
+  """, cb
 
-    var site = new Site(app);
+writeAppJs = (app, cb) ->
+  fs.writeFileSync 'build/app.js', """
+    var Site = require('intercessor').Site;
+    var app = #{JSON.stringify app};
+    var site = new Site(app, __dirname);
     site.start(function () {});
 
   """
+  cb()
 
-writeCss = (app, cb) ->
+writeAppCss = (app, cb) ->
   inFile = __dirname + '/../styles/index.styl'
+  # Build Intercessor's styles.
   Build.stylus 'build/s/css/site.css', inFile, {}, ->
-    return cb?() if not app.stylFile
-    Build.stylus 'build/s/css/app.css', app.stylFile, {}, cb
+    appStyl = path.resolve 'styles/index.styl'
+    return cb?() unless fs.existsSync appStyl
+    app.useStylFile = true
+    Build.stylus 'build/s/css/app.css', appStyl, {}, cb
 
-writeClient = (app, cb) ->
-  return cb?() if not app.clientFile
-  inFile = path.resolve app.clientFile
+writeClientJs = (app, cb) ->
+  inFile = path.resolve 'client/index.coffee'
+  return cb?() unless fs.existsSync inFile
+  app.useClientFile = true
   Build.browserify 'build/s/js/client.js', inFile, {}, cb
-
-module.exports = main
