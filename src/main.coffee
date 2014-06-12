@@ -23,6 +23,9 @@ runScript = (app, cb) ->
   Build.sh """
     rm -fr build
     mkdir -p build/s/css build/s/js
+    if [ -f gulpfile.js ]; then
+      gulp
+    fi
     if [ -d app ]; then
       coffee --compile --bare --output build/app app
     fi
