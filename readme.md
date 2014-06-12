@@ -8,17 +8,15 @@
 
 The app must contain a `manifest.coffee` to signal it is a Intercessor app.
 
-Recognized files and dirs:
+The following files and dirs are recognized and processed.
 
-* `app/` – If it exists, it is compiled from CoffeeScript into `build/app/`.
-* `client/` – If it exists, it has to contain a `index.coffee`. It and its
-requirements are browserified into `build/s/js/client.js`.
-* `gulpfile.js` – If it exists, `gulp` is run before any of the other files
-are used.
-* `static/` – If it exists, all contents are copied into `build/s/`.
-* `styles/` – If it exists, it has to contain a `index.styl`. It and its
-requirements are compiled into `build/s/css/app.css`.
-* `views/` – If it exists, it is copied to `build/views`.
+Name | Destination | Action
+--- | --- | ---
+`app/` | `build/app/` | Compiled from CoffeeScript.
+`client/` | `build/s/js/client.js` | Browserified with its requirements. Has to contain a `index.coffee`.
+`static/` | `build/s/` | Copied.
+`styles/` | `build/s/css/app.css` | Compiled from Stylus. Has to contain a `index.styl`.
+`views/` | `build/views` | Copied.
 
 ## Example
 
