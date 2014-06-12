@@ -12,11 +12,22 @@ module.exports = ->
   build app
 
 build = (app) ->
+  setDefaultValues app
+  setOrchestrationValues app
   runScript app, ->
     writeAppViews app, ->
       writeAppCss app, ->
         writeClientJs app, ->
           writeAppJs app, ->
+
+setDefaultValues = (app) ->
+  app.id or= 'app'
+  app.title or= 'App'
+  app.lang or= 'en'
+
+setOrchestrationValues = (app) ->
+  app.globalStatic = '/s'
+  app.static = '/s'
 
 runScript = (app, cb) ->
   app.useAppLogic = fs.existsSync 'app'
