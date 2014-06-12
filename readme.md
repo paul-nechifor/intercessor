@@ -14,9 +14,10 @@ Name | Destination | Action
 --- | --- | ---
 `app/` | `build/app/` | Compiled from CoffeeScript.
 `client/` | `build/s/js/client.js` | Browserified with its requirements. Has to contain a `index.coffee`.
+`html/` | `build/html/` | Copied and served from root.
 `static/` | `build/s/` | Copied.
 `styles/` | `build/s/css/app.css` | Compiled from Stylus. Has to contain a `index.styl`.
-`views/` | `build/views` | Copied.
+`views/` | `build/views/` | Copied.
 
 ## Example
 

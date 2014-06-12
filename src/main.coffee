@@ -20,6 +20,7 @@ build = (app) ->
 
 runScript = (app, cb) ->
   app.useAppLogic = fs.existsSync 'app'
+  app.useHtml = fs.existsSync 'html'
   Build.sh """
     rm -fr build
     mkdir -p build/s/css build/s/js
@@ -31,6 +32,9 @@ runScript = (app, cb) ->
     fi
     if [ -d static ]; then
       cp -r static/* build/s
+    fi
+    if [ -d html ]; then
+      cp -r html build
     fi
     """, cb
 

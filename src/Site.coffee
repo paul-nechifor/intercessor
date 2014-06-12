@@ -31,6 +31,8 @@ module.exports = class Site
     e.use '/s', express.static @appDir + '/s'
     e.use @locals.bind this
     e.use e.router
+    if @app.useHtml
+      e.use '/', express.static @appDir + '/html'
 
   registerRoutes: ->
     return unless @app.useAppLogic
