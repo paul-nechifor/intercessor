@@ -35,7 +35,9 @@ writeAppViews = (app, cb) ->
   Build.sh """
     # Copy Intercessor's views.
     cp -r #{__dirname}/../views build
-    cp -r views/* build/views
+    if [ -d views ]; then
+      cp -r views/* build/views
+    fi
   """, cb
 
 writeAppJs = (app, cb) ->
