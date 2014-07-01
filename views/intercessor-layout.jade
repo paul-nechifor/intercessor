@@ -5,9 +5,9 @@ html(lang=app.lang)
     title= title || app.title
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700|Open+Sans+Condensed:300,300italic,700&subset=latin,latin-ext')
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
-    link(rel='stylesheet', href=app.globalStatic + '/css/site.css')
+    link(rel='stylesheet', href=app.paths.globalStatic + '/css/site.css')
     if app.useStylFile
-      link(rel='stylesheet', href=app.static + '/css/app.css')
+      link(rel='stylesheet', href=app.paths.style)
     block head
 
   body
@@ -24,4 +24,4 @@ html(lang=app.lang)
     script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
     block scripts
     if app.useClientFile
-      script(src=app.static + '/js/client.js')
+      script(src=app.paths.client)

@@ -1,84 +1,29 @@
-require('coffee-script').register()
-fs = require 'fs'
+optimist = require 'optimist'
 path = require 'path'
-{Build} = require 'web-build-tools'
+Intercessor = require './Intercessor'
 
-module.exports = ->
-  try
-    app = require path.resolve './manifest'
-  catch e
-    console.error "No `manifest.coffee` in current dir (#{path.resolve '.'})."
-    process.exit 1
-  build app
+module.exports = main = ->
+  argv = optimist
+  .usage 'Usage: $0'
 
-build = (app) ->
-  setDefaultValues app
-  setOrchestrationValues app
-  runScript app, ->
-    writeAppViews app, ->
-      writeAppCss app, ->
-        writeClientJs app, ->
-          writeAppJs app, ->
+  .default 'p', path.resolve '.'
+  .alias 'p', 'project-dir'
+  .describe 'p', 'The location of the project (contains `intercessor.coffee`).'
 
-setDefaultValues = (app) ->
-  app.id or= 'app'
-  app.title or= 'App'
-  app.lang or= 'en'
+  .default 'b', path.resolve './build'
+  .alias 'b', 'build-dir'
+  .describe 'b', 'Where to build the project.'
 
-setOrchestrationValues = (app) ->
-  app.globalStatic = '/s'
-  app.static = '/s'
+  .alias 'h', 'help'
+  .describe 'h', 'Print this help message.'
+  .argv
 
-runScript = (app, cb) ->
-  app.useAppLogic = fs.existsSync 'app'
-  app.useHtml = fs.existsSync 'html'
-  Build.sh """
-    rm -fr build
-    mkdir -p build/s/css build/s/js
-    if [ -f gulpfile.js ]; then
-      gulp
-    fi
-    if [ -d app ]; then
-      coffee --compile --bare --output build/app app
-    fi
-    if [ -d static ]; then
-      cp -r static/* build/s
-    fi
-    if [ -d html ]; then
-      cp -r html build
-    fi
-    """, cb
+  if argv.h
+    optimist.showHelp()
+    process.exit()
 
-writeAppViews = (app, cb) ->
-  Build.sh """
-    # Copy Intercessor's views.
-    cp -r #{__dirname}/../views build
-    if [ -d views ]; then
-      cp -r views/* build/views
-    fi
-  """, cb
-
-writeAppJs = (app, cb) ->
-  fs.writeFileSync 'build/app.js', """
-    var Site = require('intercessor').Site;
-    var app = #{JSON.stringify app};
-    var site = new Site(app, __dirname);
-    site.start(function () {});
-
-  """
-  cb()
-
-writeAppCss = (app, cb) ->
-  inFile = __dirname + '/../styles/index.styl'
-  # Build Intercessor's styles.
-  Build.stylus 'build/s/css/site.css', inFile, {}, ->
-    appStyl = path.resolve 'styles/index.styl'
-    return cb?() unless fs.existsSync appStyl
-    app.useStylFile = true
-    Build.stylus 'build/s/css/app.css', appStyl, {}, cb
-
-writeClientJs = (app, cb) ->
-  inFile = path.resolve 'client/index.coffee'
-  return cb?() unless fs.existsSync inFile
-  app.useClientFile = true
-  Build.browserify 'build/s/js/client.js', inFile, {}, cb
+  intercessor = new Intercessor argv['project-dir'], argv['build-dir']
+  intercessor.build (err) ->
+    if err
+      console.log err
+      process.exit 1
