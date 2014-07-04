@@ -1,6 +1,6 @@
 {
   "name": "intercessor",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Paul Nechifor <paul@nechifor.net> (http://nechifor.net/)",
   "private": false,
   "main": "./lib",
