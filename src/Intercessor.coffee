@@ -126,7 +126,8 @@ module.exports = class Intercessor
     @app.useHtml = fs.existsSync @src.html
     return cb null unless @app.useHtml
     Build.sh """
-      cp -r '#{@src.html}' '#{@dst.html}'
+      mkdir -p '#{@dst.html}'
+      cp -r '#{@src.html}'/* '#{@dst.html}'
     """, cb
 
   copyViews: (cb) ->
