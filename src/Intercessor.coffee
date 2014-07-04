@@ -53,8 +53,8 @@ module.exports = class Intercessor
     @app.paths =
       globalStatic: '/s'
       static: append '/s'
-      client: o '/s/js/client.js', "/s/js/#{@app.id}/client.js"
-      style: o '/s/css/app.css', "/s/css/#{@app.id}/app.css"
+      client: o '/s/js/client.js', "/s/#{@app.id}/js/client.js"
+      style: o '/s/css/app.css', "/s/#{@app.id}/css/app.css"
 
     fileDirSet = (key, srcOrDst, value) =>
       @[srcOrDst][key + 'File'] = @[srcOrDst].project + value
