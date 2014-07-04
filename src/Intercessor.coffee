@@ -111,7 +111,7 @@ module.exports = class Intercessor
     Build.sh """
       mkdir -p '#{@dst.static}' 2> /dev/null
       if [ -d '#{@src.static}' ]; then
-        cp -r '#{@src.static}' '#{@dst.static}'
+        cp -r '#{@src.static}'/* '#{@dst.static}'
       fi
     """, cb
 
