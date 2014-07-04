@@ -14,6 +14,9 @@ module.exports = main = ->
   .alias 'b', 'build-dir'
   .describe 'b', 'Where to build the project.'
 
+  .default 'app-info'
+  .describe 'app-info', 'Get information about the generated manifest.'
+
   .alias 'h', 'help'
   .describe 'h', 'Print this help message.'
   .argv
@@ -23,6 +26,13 @@ module.exports = main = ->
     process.exit()
 
   intercessor = new Intercessor argv['project-dir'], argv['build-dir']
+
+  if argv['app-info']
+    intercessor.makeAppInfo (err) ->
+      throw err if err
+      console.log JSON.stringify intercessor.app
+    return
+
   intercessor.build (err) ->
     if err
       console.log err

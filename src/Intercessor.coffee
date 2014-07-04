@@ -11,13 +11,19 @@ module.exports = class Intercessor
     @src = {}
     @dst = {}
 
-  build: (cb) ->
+  makeAppInfo: (cb) ->
     @readManifest (err) =>
       return cb err if err
       @setDefaultValues()
       @buildTransformations()
+      cb()
+
+  build: (cb) ->
+    @makeAppInfo (err) =>
+      return cb err if err
       @runTasks (err) ->
         return cb err if err
+        cb()
 
   readManifest: (cb) ->
     try
@@ -90,7 +96,7 @@ module.exports = class Intercessor
     Build.sh """
       cd '#{@src.project}'
       if [ -f gulpfile.js ]; then
-        gulp
+        gulp --app #{JSON.stringify JSON.stringify @app}
       fi
     """, cb
 
