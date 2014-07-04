@@ -154,17 +154,21 @@ module.exports = class Intercessor
       Build.browserify @dst.clientFile, inFile, {}, cb
 
   makeStyles: (cb) ->
+    opts =
+      defines:
+        appPathsStatic: @app.paths.static
+        appPathsGlobalStatic: @app.paths.globalStatic
     makeSiteStyle = (cb) =>
       return cb null unless @standalone
       inFile = __dirname + '/../styles/index.styl'
       @makeDir "#{@buildPath}/s/css", cb, =>
-        Build.stylus "#{@buildPath}/s/css/site.css", inFile, {}, cb
+        Build.stylus "#{@buildPath}/s/css/site.css", inFile, opts, cb
     makeOwnStyle = (cb) =>
       appStyl = path.resolve @src.styleFile
       return cb() unless fs.existsSync appStyl
       @app.useStylFile = true
       @makeDir @dst.style, cb, =>
-        Build.stylus @dst.styleFile, appStyl, {}, cb
+        Build.stylus @dst.styleFile, appStyl, opts, cb
     makeSiteStyle (err) ->
       return cb err if err
       makeOwnStyle cb
