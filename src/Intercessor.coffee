@@ -36,6 +36,7 @@ module.exports = class Intercessor
     @app.id or= 'app'
     @app.title or= 'App'
     @app.lang or= 'en'
+    @app.root = if @standalone then '/' else '/' + @app.id
 
   buildTransformations: ->
     @src.project = @projectPath

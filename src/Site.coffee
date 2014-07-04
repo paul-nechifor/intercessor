@@ -37,7 +37,6 @@ module.exports = class Site
   registerRoutes: ->
     return unless @app.useAppLogic
     @appLogic = require path.resolve @appDir + '/app/index'
-    @appLogic.setSite @
 
     for route in @app.routes
       [verb, path, funcName] = route
