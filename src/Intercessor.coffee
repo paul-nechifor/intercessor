@@ -6,6 +6,7 @@ path = require 'path'
 module.exports = class Intercessor
   constructor: (@projectPath, @buildPath) ->
     @standalone = true
+    @customRoot = null
     @app = null
     @manifest = null
     @src = {}
@@ -36,7 +37,12 @@ module.exports = class Intercessor
     @app.id or= 'app'
     @app.title or= 'App'
     @app.lang or= 'en'
-    @app.root = if @standalone then '/' else '/' + @app.id
+
+    if @standalone
+      @app.rootHref = @app.root = '/'
+    else
+      @app.rootHref = '/' + if @customRoot then @customRoot else @app.id
+      @app.root = @app.rootHref + '/'
 
   buildTransformations: ->
     @src.project = @projectPath
