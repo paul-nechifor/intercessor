@@ -3,16 +3,12 @@
 Intercessor is a simple web framework based on Express. I created it so that I
 can write small convention over configuration apps for my web site
 ([nechifor.net][nechifor-net]) but still have them run standalone. The apps are
-joined together in [nechifor-site][nechifor-site].
+joined together with [nechifor-site][nechifor-site].
 
 ## Examples
 
-Projects created so far:
-
-* [intercessor-example](https://github.com/paul-nechifor/intercessor-example):
-the basic example meant for cloning
-* [sidrem](https://github.com/paul-nechifor/sidrem): showcasing a constructed
-script
+The basic example meant for cloning is [intercessor-example][icex]. All other
+projects are listed in the [Apps section][nec-apps] of Nechifor Site.
 
 ## Usage
 
@@ -42,3 +38,5 @@ MIT
 
 [nechifor-net]: http://nechifor.net
 [nechifor-site]: https://github.com/paul-nechifor/nechifor-site
+[nec-apps]: https://github.com/paul-nechifor/nechifor-site#apps
+[icex]: https://github.com/paul-nechifor/intercessor-example
