@@ -1,6 +1,6 @@
 {
   "name": "intercessor",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Simple web framework based on Express.",
   "author": "Paul Nechifor <paul@nechifor.net> (http://nechifor.net/)",
   "main": "./lib",
