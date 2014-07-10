@@ -22,6 +22,9 @@ module.exports = class Intercessor
   build: (cb) ->
     @makeAppInfo (err) =>
       return cb err if err
+      if @app.staticApp
+        @makeStaticApp cb
+        return
       @runTasks (err) ->
         return cb err if err
         cb()
@@ -76,6 +79,12 @@ module.exports = class Intercessor
     fileDirSet 'client', 'dst', @app.paths.client
     fileDirSet 'style', 'src', '/styles/index.styl'
     fileDirSet 'style', 'dst', @app.paths.style
+
+  makeStaticApp: (cb) ->
+    Build.sh """
+      mkdir -p '#{@dst.project}/sa'
+      cp -r '#{@src.project}/#{@app.staticApp}' '#{@dst.project}/sa/#{@app.id}'
+    """, cb
 
   runTasks: (cb) ->
     tasks = [
