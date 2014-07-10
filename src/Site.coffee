@@ -18,6 +18,9 @@ module.exports = class Site
   stop: ->
 
   configure: ->
+    if @app.useAppLogic
+      @appLogic = require path.resolve @appDir + '/app/index'
+
     e = @express
 
     e.set 'port', @port
@@ -30,13 +33,16 @@ module.exports = class Site
     e.use express.methodOverride()
     e.use '/s', express.static @appDir + '/s'
     e.use @locals.bind this
+
+    if @appLogic.changers and @appLogic.changers.preRouter
+      @appLogic.changers.preRouter e, @app
+
     e.use e.router
     if @app.useHtml
       e.use '/', express.static @appDir + '/html'
 
   registerRoutes: ->
     return unless @app.useAppLogic
-    @appLogic = require path.resolve @appDir + '/app/index'
 
     for route in @app.routes
       [verb, path, funcName] = route
