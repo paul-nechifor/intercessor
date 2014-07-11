@@ -7,6 +7,7 @@ module.exports = class Intercessor
   constructor: (@projectPath, @buildPath) ->
     @standalone = true
     @customRoot = null
+    @analyticsCode = null
     @app = null
     @manifest = null
     @src = {}
@@ -40,6 +41,7 @@ module.exports = class Intercessor
     @app.id or= 'app'
     @app.title or= 'App'
     @app.lang or= 'en'
+    @app.analyticsCode = @analyticsCode if @analyticsCode
 
     if @standalone
       @app.rootHref = @app.root = '/'
