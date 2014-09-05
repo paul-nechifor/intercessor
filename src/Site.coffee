@@ -37,7 +37,7 @@ module.exports = class Site
     e.use '/s', express.static @appDir + '/s'
     e.use @locals.bind this
 
-    if @appLogic.changers and @appLogic.changers.preRouter
+    if @app.useAppLogic and @appLogic.changers and @appLogic.changers.preRouter
       @appLogic.changers.preRouter e, @app
 
     e.use e.router
