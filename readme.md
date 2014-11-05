@@ -2,8 +2,8 @@
 
 Intercessor is a simple web framework based on Express. I created it so that I
 can write small convention over configuration apps for my web site
-([nechifor.net][nechifor-net]) but still have them run standalone. The apps are
-joined together with [nechifor-site][nechifor-site].
+([nechifor.net][]) but still have them run standalone. The apps are joined
+together in [nechifor-site][].
 
 ## Examples
 
@@ -26,17 +26,27 @@ Name | Destination | Action
 `styles/` | `build/s/css/app.css` | Compiled from Stylus. Has to contain a `index.styl`.
 `views/` | `build/views/#{app.id}` | Copied.
 
-## Development
+## Supported commands
 
-Rebuild it:
+Intercessor apps should use the scripts field in NPM's `package.json` to
+implement simple common commands. This means you can run the with `npm run
+<command-name>`. All intercessor commands should support the following commands:
 
-    npm run preinstall
+* `up` - Download every requirement, build everything and bring the standalone
+web server up. One command to rule them all.
+
+* `build` - Build the web site in `build/` and all other necessary content.
+
+* `start` - Start the web server.
+
+* `intercessor-make` - Make everything necessary before the site is built with
+intercessor to run jointly (non standalone).
 
 ## License
 
 MIT
 
-[nechifor-net]: http://nechifor.net
+[nechifor.net]: http://nechifor.net
 [nechifor-site]: https://github.com/paul-nechifor/nechifor-site
 [nec-apps]: https://github.com/paul-nechifor/nechifor-site#apps
 [icex]: https://github.com/paul-nechifor/intercessor-example
