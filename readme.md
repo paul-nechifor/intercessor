@@ -28,19 +28,20 @@ Name | Destination | Action
 
 ## Supported commands
 
-Intercessor apps should use the scripts field in NPM's `package.json` to
-implement simple common commands. This means you can run the with `npm run
-<command-name>`. All intercessor commands should support the following commands:
+Intercessor apps should use the scripts field in `package.json` to implement
+simple common commands. This means you can run the commands with `npm run
+<command>`. Intercessor apps should support these commands:
 
 * `up` - Download every requirement, build everything and bring the standalone
 web server up. One command to rule them all.
 
-* `build` - Build the web site in `build/` and all other necessary content.
+* `build` - Build the web site in `build/` and build all other necessary
+content.
 
-* `start` - Start the web server.
+* `start` - Start the build web server.
 
 * `intercessor-make` - Make everything necessary before the site is built with
-intercessor to run jointly (non standalone).
+`intercessor` to run jointly (non standalone).
 
 ## License
 
