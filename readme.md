@@ -43,6 +43,8 @@ content.
 * `intercessor-make` - Make everything necessary before the site is built with
 `intercessor` to run jointly (non standalone).
 
+* `clean` - Clean all generated content.
+
 ## License
 
 MIT
