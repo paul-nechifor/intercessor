@@ -1,3 +1,7 @@
+# This repository has been moved to [gitlab.com/paul-nechifor/intercessor](http://gitlab.com/paul-nechifor/intercessor).
+
+Old readme:
+
 # Intercessor
 
 Intercessor is a simple web framework based on Express. I created it so that I
